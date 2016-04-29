@@ -8,49 +8,28 @@
  * New Request Controller of the heatApp
  */
 angular.module('heatApp')
-  .controller('NewReq', function ($rootScope, md5, VisitorService, $scope, Auth, $route, $location) {
-  	$scope.md5 = md5;
-  	$scope.showModal = false;
-	$scope.newVisitor = VisitorService.newVisitor();
-	var syncData = VisitorService.readData();
-
-	syncData.$bindTo($scope, 'allData');
-
-	$scope.addReq = function(){
-		if($scope.visitorNumber){
-			$scope.requestBody = {
-				date: Firebase.ServerValue.TIMESTAMP,
-				visitorID: $scope.visitorNumber,
-				user: {
-					username: $rootScope.loggedInUserData.username,
-					email: $rootScope.loggedInUserData.email
-				},
-				status: 'ready',
-				copounsGenerated: 'none'
-			};
-			$scope.newVisitor.$add($scope.requestBody);
-			$scope.visitorNumber = '';
-		}
-	};
+  .controller('AllRequests', function ($rootScope, VisitorService, $scope, Auth, $state, $location) {
+  	$scope.allData = {};
 
 	var init = function(){
 		$scope.authData = Auth.$getAuth();
 		
 		if($scope.authData === null){
-			$location.path('/login');
+			$state.go('login', {}, {reload:true});
 		}else{
-			$scope.userID = $rootScope.loggedInUserData.$id;
+			$scope.userID = $scope.authData.uid;
 		}
-		$scope.allData = VisitorService.readData();
-	}
+		var syncData = VisitorService.readData();
+		syncData.$bindTo($scope, 'allData');
+	};
 
 	$scope.parJson = function (json) {
-        return JSON.parse(json);
+		return JSON.parse(json);
     };
 
 	$scope.logout = function(){
 		Auth.$unauth();
-		$location.path('/login');
+		$location.path('/login')
 	};
 
 	$scope.openModal = function(request){
@@ -66,10 +45,11 @@ angular.module('heatApp')
 			$scope.genCoupons = null;
 		}
 		
-	};
+	};	
 
 	$scope.$watch('allData', function(newValue, oldValue){
-		if(newValue !== undefined && newValue !== null ){
+		if(newValue !== oldValue){
+			// console.log('Got it', newValue);
 			delete newValue.$id;
 			delete newValue.$priority;
 			$scope.requests = newValue;

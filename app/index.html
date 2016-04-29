@@ -11,21 +11,21 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-social/bootstrap-social.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="heatApp" ng-controller="MainCtrl" ng-cloak>
+  <body ng-app="heatApp" ng-cloak>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
 
-  <div ui-view></div>
+  <ng-view></ng-view>
 
     <div class="footer">
       <div class="container">
@@ -63,21 +63,28 @@
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
-    <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.js"></script>
-    <script src="bower_components/Flot/jquery.flot.js"></script>
-    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
+    <script src="http://code.highcharts.com/highcharts.src.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/loginCtrl.js"></script>
         <script src="scripts/controllers/signupCtrl.js"></script>
         <script src="scripts/controllers/reqCtrl.js"></script>
+        <script src="scripts/controllers/allRequests.js"></script>
         <script src="scripts/controllers/mainCtrl.js"></script>
-        <script src="scripts/services/userService.js"></script>
+        <script src="scripts/controllers/modal.js"></script>
+        <script src="scripts/controllers/chartmodal.js"></script>
+        <script src="scripts/controllers/dashboardCtrl.js"></script>
+        <script src="scripts/services/userService.js"></script>        
         <script src="scripts/services/authService.js"></script>
         <script src="scripts/services/visitorService.js"></script>
+        <script src="scripts/services/clusterService.js"></script>
         <!-- endbuild -->
 </body>
 </html>

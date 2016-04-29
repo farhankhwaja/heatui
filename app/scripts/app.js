@@ -19,36 +19,48 @@ angular
     'firebase',
     'ngMaterial',
     'angular-md5',
-    'ui.router'
+    'ui.router',
+    'ui.bootstrap',
+    'ui.bootstrap.tpls',
+    'highcharts-ng'
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
-    
-    $urlRouterProvider.otherwise('/login');
+  .config(function (highchartsNGProvider) {
+    highchartsNGProvider.lazyLoad();
 
-    $stateProvider
-      .state('login', {
-        url: '/login',
+    highchartsNGProvider.lazyLoad([highchartsNGProvider.HIGHCHART, 'maps/modules/map.js', 'mapdata/custom/world.js']);
+
+    highchartsNGProvider.basePath('/js/'); 
+
+  })
+  .config(function ($routeProvider) {
+
+    $routeProvider
+      .when('/login',{  
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
-      .state('signup', {
-        url: '/signup',
+      .when('/signup',{ 
         templateUrl: 'views/signup.html',
         controller: 'SignUpCtrl'
       })
-      .state('home', {
-        url: '/home',
+      .when('/home',{ 
         templateUrl: 'views/home.html',
         controller: 'NewReq'
       })
-      .state('dashboard', {
-        url: '/dashboard',
-        templateUrl: 'views/dashboard/index.html',
-        controller: ''
-      });
+      .when('/requests',{ 
+        templateUrl: 'views/allReqs.html',
+        controller: 'NewReq'
+      })
+      .when('/analytics',{
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl'
+      })
+      .otherwise({
+        redirectTo: '/login'
+       });
   })
   .run(function($rootScope, $state, UserService) {
-      $rootScope.$on('$stateChangeStart', function() {
+      $rootScope.$on('$routeChangeStart', function() {
         var loggedInUser = UserService.getLoggedInUser();
         if(loggedInUser) {
           $rootScope.loggedInUserData = UserService.getUserData(loggedInUser.uid);

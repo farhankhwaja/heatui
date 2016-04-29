@@ -36,9 +36,9 @@ module.exports = function(config) {
       'bower_components/angular-aria/angular-aria.js',
       'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-material/angular-material.js',
-      'bower_components/flot.tooltip/js/jquery.flot.tooltip.js',
-      'bower_components/Flot/jquery.flot.js',
-      'bower_components/datatables/media/js/jquery.dataTables.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/highcharts-ng/dist/highcharts-ng.js',
+      'bower_components/d3/d3.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

@@ -8,27 +8,32 @@
  * Auth Controller of the heatApp
  */
 angular.module('heatApp')
-  .controller('LoginCtrl', function (Auth, UserService, $state, $scope, $rootScope) {
+  .controller('LoginCtrl', function (Auth, UserService, $location, $scope, $rootScope, $timeout) {
     $scope.email = '';
     $scope.password = '';
     $scope.message = null;
+    $scope.showError = false;
 
 	$scope.logout = function(){
 		Auth.$unauth();
-		$state.go('login');
+		$location.path('/login');
 	};
 
 	$scope.login =  function() {
-
 		Auth.$authWithPassword({
 			email: $scope.email,
 			password: $scope.password
 		}).then(function(data) {
 			$scope.email = null;
 			$scope.password = null;
-			$state.go('home');
+			$location.path('/home');
 		}).catch(function(error) {
-			$scope.message = 'there was an error! ' + error;
+			$scope.showError = true;
+			$scope.message = error;
+			$timeout(function () {
+				$scope.showError = false;
+            	$scope.message = null;
+          	}, 3000);
 		});
 	};
   });
